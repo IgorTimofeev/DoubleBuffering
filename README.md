@@ -19,37 +19,39 @@ In addition, this library doesn't access any Lua table directly, replacing them 
 | Contents |
 | ----- |
 | [Installation](#installation) |
-| [Main methods](#main-methods) |
-| [    buffer.getResolution](#buffergetresolution-int-width-int-height) |
-| [    buffer.setResolution](#buffersetresolution-width-height-) |
-| [    buffer.bindScreen](#bufferbindscreen-address-) |
-| [    buffer.bindGPU](#bufferbindgpu-address-) |
-| [Методы отрисовки](#Методы-отрисовки) |
-| [    buffer.draw](#bufferdraw-force-) |
-| [    buffer.setDrawLimit](#buffersetdrawlimit-x1-y1-x2-y2-) |
-| [    buffer.getDrawLimit](#buffergetdrawlimit--int-x1-int-y1-int-x2-int-y2) |
-| [    buffer.copy](#buffercopy-x-y-width-height--table-pixeldata) |
-| [    buffer.paste](#bufferpaste-x-y-pixeldata-) |
-| [    buffer.set](#bufferpaste-x-y-pixeldata-) |
-| [    buffer.get](#bufferpaste-x-y-pixeldata-) |
-| [    buffer.square](#buffersquare-x-y-width-height-background-foreground-symbol-transparency-) |
-| [    buffer.clear](#bufferclear-color-transparency-) |
-| [    buffer.text](#buffertext-x-y-color-text-transparency-) |
-| [    buffer.formattedText](#bufferformattedtext-x-y-text-) |
-| [    buffer.image](#bufferimage-x-y-picture-) |
-| [Методы полупиксельной отрисовки:](#Методы-полупиксельной-отрисовки) |
-| [    buffer.semiPixelSet](#buffersemipixelset-x-y-color-) |
-| [    buffer.semiPixelSquare](#buffersemipixelsquare-x-y-width-height-color-) |
-| [    buffer.semiPixelLine](#buffersemipixelline-x1-y1-x2-y2-color-) |
-| [    buffer.semiPixelCircle](#buffersemipixelcircle-xcenter-ycenter-radius-color-) |
-| [    buffer.semiPixelBezierCurve](#buffersemipixelbeziercurve-points-color-precision-) |
+| [Main methods:](#main-methods) |
+| [   buffer.getResolution](#buffergetresolution-int-width-int-height) |
+| [   buffer.setResolution](#buffersetresolution-width-height-) |
+| [   buffer.bindScreen](#bufferbindscreen-address-) |
+| [   buffer.bindGPU](#bufferbindgpu-address-) |
+| [Rendering methods:](#rendering-methods) |
+| [   buffer.drawChanges](#bufferdrawchanges-force-) |
+| [   buffer.setDrawLimit](#buffersetdrawlimit-x1-y1-x2-y2-) |
+| [   buffer.getDrawLimit](#buffergetdrawlimit--int-x1-int-y1-int-x2-int-y2) |
+| [   buffer.copy](#buffercopy-x-y-width-height--table-pixeldata) |
+| [   buffer.paste](#bufferpaste-x-y-pixeldata-) |
+| [   buffer.set](#bufferpaste-x-y-pixeldata-) |
+| [   buffer.get](#bufferpaste-x-y-pixeldata-) |
+| [   buffer.drawRectangle](#bufferdrawrectangle-x-y-width-height-background-foreground-symbol-transparency-) |
+| [   buffer.clear](#bufferclear-color-transparency-) |
+| [   buffer.drawText](#bufferdrawtext-x-y-color-text-transparency-) |
+| [   buffer.drawImage](#bufferdrawimage-x-y-picture-) |
+| [   buffer.drawLine](#bufferdrawline-x1-y1-x2-y2-background-foreground-symbol-) |
+| [   buffer.drawEllipse](#bufferdrawellipse-centerx-centery-radiusx-radiusy-background-foreground-symbol-) |
+| [Semi-pixel rendering methods:](#semipixel-rendering-methods) |
+| [   buffer.semiPixelSet](#buffersemipixelset-x-y-color-) |
+| [   buffer.drawSemiPixelSquare](#bufferdrawsemipixelrectangle-x-y-width-height-color-) |
+| [   buffer.drawSemiPixelLine](#bufferdrawsemipixelline-x1-y1-x2-y2-color-) |
+| [   buffer.drawSemiPixelEllipse](#bufferdrawSemiPixelEllipse-centerX-centerY-radiusX-radiusY-color-) |
+| [   buffer.drawSemiPixelCurve](#bufferdrawsemipixelcurve-points-color-accuracy-) |
 | [Вспомогательные методы:](#Вспомогательные-методы) |
-| [    buffer.flush](#bufferflush-width-height-) |
-| [    buffer.getIndexByCoordinates](#buffergetindexbycoordinates-x-y--int-index) |
-| [    buffer.getCoordinatesByIndex](#buffergetcoordinatesbyindex-index--int-x-int-y) |
-| [    buffer.rawSet](#bufferrawset-index-background-foreground-symbol-) |
-| [    buffer.rawGet](#bufferrawget-index--int-background-int-foreground-string-symbol) |
-| [Практический пример #1](#Практический-пример-1) |
+| [   buffer.flush](#bufferflush-width-height-) |
+| [   buffer.getIndexByCoordinates](#buffergetindexbycoordinates-x-y--int-index) |
+| [   buffer.getCoordinatesByIndex](#buffergetcoordinatesbyindex-index--int-x-int-y) |
+| [   buffer.rawSet](#bufferrawset-index-background-foreground-symbol-) |
+| [   buffer.rawGet](#bufferrawget-index--int-background-int-foreground-string-symbol) |
+| [   buffer.getCurrentFrameTables](#buffergetcurrentframetables-table-currentframebackgrounds-table-currentframeforegrounds-table-currentframesymbols) |
+| [   buffer.getNewFrameTables](#buffergetnewframetables-table-newframebackgrounds-table-newframeforegrounds-table-newframesymbols) |
 
 Installation
 ======
