@@ -44,7 +44,7 @@ In addition, this library doesn't access any Lua table directly, replacing them 
 | [   buffer.drawSemiPixelLine](#bufferdrawsemipixelline-x1-y1-x2-y2-color-) |
 | [   buffer.drawSemiPixelEllipse](#bufferdrawSemiPixelEllipse-centerX-centerY-radiusX-radiusY-color-) |
 | [   buffer.drawSemiPixelCurve](#bufferdrawsemipixelcurve-points-color-accuracy-) |
-| [Вспомогательные методы:](#Вспомогательные-методы) |
+| [Auxiliary methods:](#auxiliary-methods) |
 | [   buffer.flush](#bufferflush-width-height-) |
 | [   buffer.getIndexByCoordinates](#buffergetindexbycoordinates-x-y--int-index) |
 | [   buffer.getCoordinatesByIndex](#buffergetcoordinatesbyindex-index--int-x-int-y) |
@@ -89,7 +89,7 @@ buffer.**bindScreen**( address )
 -----------------------------------------------------------
 | Type | Parameter | Description |
 | ------ | ------ | ------ |
-| *string* | address | Адрес компонента экрана |
+| *string* | address | Screen component address |
 
 Bind the GPU used by library to the specified screen component address. Content of buffer will be cleared with black pixels and whitespace symbol.
 
@@ -97,7 +97,7 @@ buffer.**bindGPU**( address )
 -----------------------------------------------------------
 | Type | Parameter | Description |
 | ------ | ------ | ------ |
-| *string* | address | Адрес компонента видеокарты |
+| *string* | address | GPU component address |
 
 Set the GPU component address is used by library. Content of buffer will be cleared with black pixels and whitespace symbol.
 
@@ -105,7 +105,7 @@ buffer.**getGPUProxy**( ): *table* GPUProxy
 -----------------------------------------------------------
 Get a pointer to currently bound GPU component proxy.
 
-Drawing methods
+Rendering methods
 ======
 
 buffer.**drawChanges**( [force] )
@@ -136,7 +136,7 @@ buffer.**copy**( x, y, width, height ): *table* pixelData
 | Type | Parameter | Description |
 | ------ | ------ | ------ |
 | *int* | x | Copied area coordinate by x-axis |
-| *int* | y | Copied area coordinate by н-axis |
+| *int* | y | Copied area coordinate by y-axis |
 | *int* | width | Copied area width |
 | *int* | height | Copied area height |
 
@@ -354,7 +354,7 @@ buffer.**rawGet**( index ): **int** background, **int** foreground, **string** s
 -----------------------------------------------------------
 | Type | Parameter | Description |
 | ------ | ------ | ------ |
-| *int* | index | Индекс экранного буфера |
+| *int* | index | Screen buffer index |
 
 Get data values of pixel with specified index.
 
