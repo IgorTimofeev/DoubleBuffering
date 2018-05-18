@@ -10,7 +10,7 @@ The main concept of library is very simple: there are 6 tables stored in the RAM
 
 Compared with standard linear rendering, the rendering with this library time is reduced by hundreds and thousands of times. The picture below shows this:
 
-![](https://i.imgur.com/kAEjUMk.png)
+![](https://i.imgur.com/k9wEQTO.png)
 
 The price of such speed is an increased consumption of RAM. To minimize it, library uses the one-dimensional structure of the pixel data tables instead of the three-dimensional one. To obtain pixel data, special methods are used that convert screen coordinates to screen buffer indices and vice versa, more about this is written below in **Auxiliary methods** section.
 
@@ -411,4 +411,4 @@ buffer.drawChanges()
 
 Result: 
 
-![Imgur](http://i.imgur.com/wvu0jeh.png?1)
+![](http://i.imgur.com/wvu0jeh.png?1)
