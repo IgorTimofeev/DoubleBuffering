@@ -1,10 +1,11 @@
 About
 ======
+
 DoubleBuffering is a low-level library for efficient usge of GPU resources and rendering data on screen as fast as possible. For example, our 3D-engine with dynamic lighting, as well as a small game based on raycasting are realised with this library. And they give out acceptable FPS values:
 
-![Imgur](http://i.imgur.com/YgL9fCo.png?1)
+![](http://i.imgur.com/YgL9fCo.png?1)
 
-![Imgur](http://i.imgur.com/yHEwiNo.png?1)
+![](http://i.imgur.com/yHEwiNo.png?1)
 
 The main concept of library is very simple: there are 6 tables stored in the RAM and containing information about pixels on the screen. The first 3 tables stores what is displayed at the moment, and the other 3 tables - what user is drawing to screen buffer in this moment. After performing all the drawing operations, user calls the buffer.**drawChanges** () function: library will automatically detect changed pixels, groups them into an temporary buffer by color values to reduce GPU calls, and finnaly will display result on screen.
 
