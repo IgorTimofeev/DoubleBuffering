@@ -18,11 +18,6 @@ local unicodeLen, unicodeSub = unicode.len, unicode.sub
 
 --------------------------------------------------------------------------------
 
-local function getCoordinates(index)
-	local integer, fractional = index / bufferWidth, index % bufferWidth
-	return fractional, integer - fractional + 1
-end
-
 local function getIndex(x, y)
 	return bufferWidth * (y - 1) + x
 end
@@ -199,23 +194,23 @@ end
 
 local function paste(startX, startY, picture)
 	local imageWidth = picture[1]
-	local bufferIndex, imageIndex, bufferIndexStepOnReachOfImageWidth = bufferWidth * (startY - 1) + startX, 3, bufferWidth - imageWidth
+	local bufferIndex, pictureIndex, bufferIndexStepOnReachOfImageWidth = bufferWidth * (startY - 1) + startX, 3, bufferWidth - imageWidth
 
 	for y = startY, startY + picture[2] - 1 do
 		if y >= drawLimitY1 and y <= drawLimitY2 then
 			for x = startX, startX + imageWidth - 1 do
 				if x >= drawLimitX1 and x <= drawLimitX2 then
-					newFrameBackgrounds[bufferIndex] = picture[imageIndex]
-					newFrameForegrounds[bufferIndex] = picture[imageIndex + 1]
-					newFrameSymbols[bufferIndex] = picture[imageIndex + 2]
+					newFrameBackgrounds[bufferIndex] = picture[pictureIndex]
+					newFrameForegrounds[bufferIndex] = picture[pictureIndex + 1]
+					newFrameSymbols[bufferIndex] = picture[pictureIndex + 2]
 				end
 
-				bufferIndex, imageIndex = bufferIndex + 1, imageIndex + 3
+				bufferIndex, pictureIndex = bufferIndex + 1, pictureIndex + 3
 			end
 
 			bufferIndex = bufferIndex + bufferIndexStepOnReachOfImageWidth
 		else
-			bufferIndex, imageIndex = bufferIndex + bufferWidth, imageIndex + imageWidth * 3
+			bufferIndex, pictureIndex = bufferIndex + bufferWidth, pictureIndex + imageWidth * 3
 		end
 	end
 end
@@ -318,38 +313,36 @@ local function drawText(x, y, textColor, data, transparency)
 end
 
 local function drawImage(startX, startY, picture, blendForeground)
-	local imageWidth = picture[1]
-	local bufferIndex, imageIndex, bufferIndexStepOnReachOfImageWidth, imageIndexPlus1, imageIndexPlus2, imageIndexPlus3 = bufferWidth * (startY - 1) + startX, 3, bufferWidth - imageWidth
+	local bufferIndex, pictureIndex, imageWidth, backgrounds, foregrounds, alphas, symbols = bufferWidth * (startY - 1) + startX, 1, picture[1], picture[3], picture[4], picture[5], picture[6]
+	local bufferIndexStepOnReachOfImageWidth = bufferWidth - imageWidth
 
 	for y = startY, startY + picture[2] - 1 do
 		if y >= drawLimitY1 and y <= drawLimitY2 then
 			for x = startX, startX + imageWidth - 1 do
 				if x >= drawLimitX1 and x <= drawLimitX2 then
-					imageIndexPlus1, imageIndexPlus2, imageIndexPlus3 = imageIndex + 1, imageIndex + 2, imageIndex + 3
-					
-					if picture[imageIndexPlus2] == 0 then
-						newFrameBackgrounds[bufferIndex], newFrameForegrounds[bufferIndex] = picture[imageIndex], picture[imageIndexPlus1]
-					elseif picture[imageIndexPlus2] > 0 and picture[imageIndexPlus2] < 1 then
-						newFrameBackgrounds[bufferIndex] = colorBlend(newFrameBackgrounds[bufferIndex], picture[imageIndex], picture[imageIndexPlus2])
+					if alphas[pictureIndex] == 0 then
+						newFrameBackgrounds[bufferIndex], newFrameForegrounds[bufferIndex] = backgrounds[pictureIndex], foregrounds[pictureIndex]
+					elseif alphas[pictureIndex] > 0 and alphas[pictureIndex] < 1 then
+						newFrameBackgrounds[bufferIndex] = colorBlend(newFrameBackgrounds[bufferIndex], backgrounds[pictureIndex], alphas[pictureIndex])
 						
 						if blendForeground then
-							newFrameForegrounds[bufferIndex] = colorBlend(newFrameForegrounds[bufferIndex], picture[imageIndexPlus1], picture[imageIndexPlus2])
+							newFrameForegrounds[bufferIndex] = colorBlend(newFrameForegrounds[bufferIndex], foregrounds[pictureIndex], alphas[pictureIndex])
 						else
-							newFrameForegrounds[bufferIndex] = picture[imageIndexPlus1]
+							newFrameForegrounds[bufferIndex] = foregrounds[pictureIndex]
 						end
-					elseif picture[imageIndexPlus2] == 1 and picture[imageIndexPlus3] ~= " " then
-						newFrameForegrounds[bufferIndex] = picture[imageIndexPlus1]
+					elseif alphas[pictureIndex] == 1 and symbols[pictureIndex] ~= " " then
+						newFrameForegrounds[bufferIndex] = foregrounds[pictureIndex]
 					end
 
-					newFrameSymbols[bufferIndex] = picture[imageIndexPlus3]
+					newFrameSymbols[bufferIndex] = symbols[pictureIndex]
 				end
 
-				bufferIndex, imageIndex = bufferIndex + 1, imageIndex + 4
+				bufferIndex, pictureIndex = bufferIndex + 1, pictureIndex + 1
 			end
 
 			bufferIndex = bufferIndex + bufferIndexStepOnReachOfImageWidth
 		else
-			bufferIndex, imageIndex = bufferIndex + bufferWidth, imageIndex + imageWidth * 4
+			bufferIndex, pictureIndex = bufferIndex + bufferWidth, pictureIndex + imageWidth
 		end
 	end
 end
