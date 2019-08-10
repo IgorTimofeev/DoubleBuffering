@@ -559,6 +559,47 @@ local function drawChanges(force)
 end
 
 --------------------------------------------------------------------------------
+--legacy support
+local function square(x, y, width, height, background, foreground, symbol, transparency) 
+	local index, indexStepOnReachOfSquareWidth = getIndex(x, y), bufferWidth - width
+	for j = y, y + height - 1 do
+		if j >= drawLimitY1 and j <= drawLimitY2 then
+			for i = x, x + width - 1 do
+				if i >= drawLimitX1 and i <= drawLimitX2 then
+					if transparency then
+						newFrameBackgrounds[index], newFrameForegrounds[index] =
+							colorBlend(newFrameBackgrounds[index], background, transparency),
+							colorBlend(newFrameForegrounds[index], background, transparency)
+					else
+						newFrameBackgrounds[index], newFrameForegrounds[index], newFrameSymbols[index] = background, foreground, symbol
+					end
+				end
+
+				index = index + 1
+			end
+
+			index = index + indexStepOnReachOfSquareWidth
+		else
+			index = index + bufferWidth
+		end
+	end
+end
+
+local function customImage(x, y, pixels)
+	x = x - 1
+	y = y - 1
+
+	for i=1, #pixels do
+		for j=1, #pixels[1] do
+			if pixels[i][j][3] ~= "#" then
+				set(x + j, y + i, pixels[i][j][1], pixels[i][j][2], pixels[i][j][3])
+			end
+		end
+	end
+
+	return (x + 1), (y + 1), (x + #pixels[1]), (y + #pixels)
+end
+--------------------------------------------------------------------------------
 
 bindGPU(component.getPrimary("gpu").address)
 
@@ -603,4 +644,9 @@ return {
 	drawSemiPixelLine = drawSemiPixelLine,
 	drawSemiPixelEllipse = drawSemiPixelEllipse,
 	drawSemiPixelCurve = drawSemiPixelCurve,
+	
+	---LEGACY SUPPORT ---
+	customImage = customImage,
+	square = square,
+	---LEGACY SUPPORT ---
 }
