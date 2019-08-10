@@ -1,7 +1,7 @@
 About
 ======
 
-DoubleBuffering is a low-level library for efficient usge of GPU resources and rendering data on screen as fast as possible. For example, our 3D-engine with dynamic lighting, as well as a small game based on raycasting are realised with this library. And they give out acceptable FPS values:
+DoubleBuffering is a low-level library for efficient usage of GPU resources and rendering data on screen as fast as possible. For example, our 3D-engine with dynamic lighting, as well as a small game based on raycasting are realised with this library. And they give out acceptable FPS values:
 
 ![](http://i.imgur.com/YgL9fCo.png?1)
 
