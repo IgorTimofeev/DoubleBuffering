@@ -1,6 +1,6 @@
 LEGACY ALERT
 ======
-This library is no longer supported, since it has become part of the ![MineOS](https://github.com/IgorTimofeev/MineOS/). Potential bugs will not be fixed
+This library is no longer supported, since it has become part of the [MineOS](https://github.com/IgorTimofeev/MineOS/). Potential bugs will not be fixed
 
 About
 ======
